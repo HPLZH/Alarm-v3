@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm.Core", "Alarm.Core\Alarm.Core.csproj", "{9D3A786B-F464-4483-B607-F17A698B2E60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm.App", "Alarm.App\Alarm.App.csproj", "{515CB262-97C2-4338-845A-9A2390007015}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm.Log", "Alarm.Log\Alarm.Log.csproj", "{58718B50-AB9C-4EB8-BF53-B2A523DFF824}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm.Loader", "Alarm.Loader\Alarm.Loader.csproj", "{7BEA83DA-2E05-4A7F-A67D-01C0B77D3BF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm.Providers", "Alarm.Providers\Alarm.Providers.csproj", "{C996008F-333C-46B3-8D7D-5D2623D1444E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm.StreamController", "Alarm.StreamController\Alarm.StreamController.csproj", "{32D55F8F-2EAC-4CE0-B243-B8C697F68F13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Alarm.Net", "Alarm.Net\Alarm.Net.csproj", "{72ECCEBD-44A4-4394-82F9-8D03704A608F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9D3A786B-F464-4483-B607-F17A698B2E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D3A786B-F464-4483-B607-F17A698B2E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D3A786B-F464-4483-B607-F17A698B2E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D3A786B-F464-4483-B607-F17A698B2E60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{515CB262-97C2-4338-845A-9A2390007015}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515CB262-97C2-4338-845A-9A2390007015}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515CB262-97C2-4338-845A-9A2390007015}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515CB262-97C2-4338-845A-9A2390007015}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58718B50-AB9C-4EB8-BF53-B2A523DFF824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58718B50-AB9C-4EB8-BF53-B2A523DFF824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58718B50-AB9C-4EB8-BF53-B2A523DFF824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58718B50-AB9C-4EB8-BF53-B2A523DFF824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BEA83DA-2E05-4A7F-A67D-01C0B77D3BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BEA83DA-2E05-4A7F-A67D-01C0B77D3BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BEA83DA-2E05-4A7F-A67D-01C0B77D3BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BEA83DA-2E05-4A7F-A67D-01C0B77D3BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C996008F-333C-46B3-8D7D-5D2623D1444E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C996008F-333C-46B3-8D7D-5D2623D1444E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C996008F-333C-46B3-8D7D-5D2623D1444E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C996008F-333C-46B3-8D7D-5D2623D1444E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32D55F8F-2EAC-4CE0-B243-B8C697F68F13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32D55F8F-2EAC-4CE0-B243-B8C697F68F13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32D55F8F-2EAC-4CE0-B243-B8C697F68F13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32D55F8F-2EAC-4CE0-B243-B8C697F68F13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72ECCEBD-44A4-4394-82F9-8D03704A608F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72ECCEBD-44A4-4394-82F9-8D03704A608F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72ECCEBD-44A4-4394-82F9-8D03704A608F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72ECCEBD-44A4-4394-82F9-8D03704A608F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

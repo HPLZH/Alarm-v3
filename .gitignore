@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Current Repo
+!/Alarm.Log/
+
+# 测试用配置与数据文件
+/*.json
