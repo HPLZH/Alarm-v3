@@ -14,16 +14,18 @@ namespace Alarm.Core
             };
         }
 
-        public static void ExecuteVolumeConfig(PlayerInfo info)
+        public static VolumeManager ExecuteVolumeConfig(PlayerInfo info, VolumeManager? volumeManager = null)
         {
+            VolumeManager manager = volumeManager ?? VolumeManager.Shared;
             if (info.volume >= 0)
             {
-                VolumeManager.Shared.Foreach(VolumeManager.Shared.SaveAndSetVolume(info.volume), info.guid.ToString() ?? "");
+                manager.Foreach(manager.SaveAndSetVolume(info.volume / 100f), info.guid.ToString() ?? "");
             }
             if (info.unmute)
             {
-                VolumeManager.Shared.Foreach(VolumeManager.Shared.SaveAndSetMute(false), info.guid.ToString() ?? "");
+                manager.Foreach(manager.SaveAndSetMute(false), info.guid.ToString() ?? "");
             }
+            return manager;
         }
 
         public static Controller BuildController(MainConfig config)
@@ -67,6 +69,7 @@ namespace Alarm.Core
 
         public static void Exit(Application app, int code = 0)
         {
+            (app[NAME_CONTROLLER] as Controller)?.Stop();
             foreach (var (k, v) in app)
             {
                 ApplyExitHandler(v.GetType(), k, v);
