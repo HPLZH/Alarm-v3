@@ -50,7 +50,8 @@ start.SetHandler((config, moden) =>
     }
     controller = (Controller)env[Application.NAME_CONTROLLER];
     mainConfig = (MainConfig)env[Application.NAME_MAINCONFIG];
-    Application.ExecuteVolumeConfig(mainConfig.player);
+    VolumeManager volumeManager = Application.ExecuteVolumeConfig(mainConfig.player);
+    env.AddExitAction(_ => volumeManager.Foreach(volumeManager.Restore));
     controller.Play();
     env.StartMainTasks();
     while (true)
