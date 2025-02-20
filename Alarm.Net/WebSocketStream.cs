@@ -43,7 +43,7 @@ namespace Alarm.Net
                     }
                     else
                     {
-                        Task.Delay(80).Wait();
+                        Task.Yield().GetAwaiter().GetResult();
                     }
                 }
             });
@@ -85,7 +85,7 @@ namespace Alarm.Net
                 }
                 else
                 {
-                    Task.Delay(60).Wait();
+                    Task.Yield().GetAwaiter().GetResult();
                 }
             }
             return wcount;
