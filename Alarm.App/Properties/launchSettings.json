@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "Alarm.App": {
-      "commandName": "Project",
-      "commandLineArgs": "start test.json --mod",
-      "workingDirectory": "E:\\repos\\Alarm v3"
-    }
-  }
-}
