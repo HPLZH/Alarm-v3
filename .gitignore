@@ -367,3 +367,4 @@ FodyWeavers.xsd
 
 # 测试用配置与数据文件
 /*.json
+!/version.json
