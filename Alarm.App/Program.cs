@@ -4,6 +4,7 @@ using Alarm.Log;
 using System.CommandLine;
 using System.CommandLine.Parsing;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text.Json;
 using static Alarm.Loader.ModLoader;
 
@@ -42,6 +43,8 @@ root.Add(test);
 
 var schema = new Command("schema");
 root.Add(schema);
+
+var version = new Option<bool>("--version");
 
 var configFile = new Argument<FileInfo>("config-json");
 start.Add(configFile);
@@ -108,6 +111,13 @@ test.SetHandler((config, moden, cl) =>
             using var f0 = config.OpenRead();
             LoadExternalMods(f0);
         }
+        Console.WriteLine("ModLoader(s):");
+        foreach(var m in ModLoader.ModLoaders)
+        {
+            Console.WriteLine($"  {m.AssemblyQualifiedName}");
+            Console.WriteLine($"    from {m.Assembly.Location}");
+        }
+        Console.WriteLine();
         using (var f = config.OpenRead())
         {
             env = Application.AppInit(f, env);
