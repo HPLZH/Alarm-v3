@@ -2,11 +2,10 @@
 using Alarm.Loader;
 using Alarm.Log;
 using System.CommandLine;
+using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using System.Diagnostics;
-using System.Reflection;
 using System.Text.Json;
-using static Alarm.Loader.ModLoader;
 
 Application env;
 Controller controller;
@@ -35,31 +34,32 @@ var LoadExternalMods = (Stream f) =>
 
 var root = new RootCommand();
 
-var start = new Command("start");
+var start = new Command("start", "启动闹钟");
 root.Add(start);
 
-var test = new Command("test");
+var test = new Command("test", "测试配置文件");
 root.Add(test);
 
-var schema = new Command("schema");
+var schema = new Command("schema", "生成配置文件的 Json Schema");
 root.Add(schema);
 
-var version = new Option<bool>("--version");
-
-var configFile = new Argument<FileInfo>("config-json");
+var configFile = new Argument<FileInfo>("config.json", "配置文件路径");
 start.Add(configFile);
 test.Add(configFile);
 
-var conf = new Option<FileInfo?>("--config");
+var conf = new Option<FileInfo?>("--config", "配置文件路径");
+conf.AddAlias("-C");
 schema.Add(conf);
 
-var outfile = new Option<FileInfo?>("--output");
+var outfile = new Option<FileInfo?>("--output", "导出文件路径");
 schema.Add(outfile);
 
-var mod = new Option<bool>("--mod");
+var mod = new Option<bool>("--mod", "加载外部 Mod");
+mod.AddAlias("-M");
 root.AddGlobalOption(mod);
 
-var clean = new Option<bool>("--clean");
+var clean = new Option<bool>("--clean", "禁用内置 Mod");
+clean.AddAlias("--cl");
 root.AddGlobalOption(clean);
 
 start.SetHandler((config, moden, cl) =>
@@ -112,7 +112,7 @@ test.SetHandler((config, moden, cl) =>
             LoadExternalMods(f0);
         }
         Console.WriteLine("ModLoader(s):");
-        foreach(var m in ModLoader.ModLoaders)
+        foreach (var m in ModLoader.ModLoaders)
         {
             Console.WriteLine($"  {m.AssemblyQualifiedName}");
             Console.WriteLine($"    from {m.Assembly.Location}");
@@ -136,7 +136,8 @@ test.SetHandler((config, moden, cl) =>
     }
 }, configFile, mod, clean);
 
-schema.SetHandler((config, moden, cl, output) => {
+schema.SetHandler((config, moden, cl, output) =>
+{
     using TextWriter outw = output == null ? Console.Out : new StreamWriter(output.OpenWrite());
     if (!cl)
     {
@@ -148,11 +149,13 @@ schema.SetHandler((config, moden, cl, output) => {
         LoadExternalMods(f0);
     }
     outw.WriteLine(moden ? ModLoader.GetConfigSchema() : Application.GetConfigJsonSchema());
-    if(output != null)
+    if (output != null)
     {
         Console.WriteLine($"已写入文件: {output.FullName}");
     }
     outw.Close();
 }, conf, mod, clean, outfile);
 
-root.Invoke(args);
+var cmdBuilder = new CommandLineBuilder(root);
+cmdBuilder.UseVersionOption("--version", "-v", "-V").UseDefaults();
+cmdBuilder.Build().Invoke(args);
