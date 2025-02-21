@@ -7,6 +7,13 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Authors>hplzh</Authors>
+    <Company></Company>
+    <RepositoryUrl>https://github.com/HPLZH/Alarm-v3/</RepositoryUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Alarm.Core\Alarm.Core.csproj" />
   </ItemGroup>
