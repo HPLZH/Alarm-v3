@@ -8,9 +8,9 @@ namespace Alarm.Providers
         {
             base.Load();
 
-            RegisterProviderBuilder("fw", Source.FloatingWeight.Managed.FromJson);
+            RegisterProviderBuilder("fw", new(Source.FloatingWeight.Managed.FromJson, typeof(Source.FloatingWeight.Managed.Config)));
 
-            RegisterProviderBuilder("pf", Pipeline.PossibilityFilter.FromJson);
+            RegisterProviderBuilder("pf", new(Pipeline.PossibilityFilter.FromJson, typeof(Pipeline.PossibilityFilter.Config)));
         }
     }
 }

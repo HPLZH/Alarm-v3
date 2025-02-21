@@ -10,12 +10,12 @@ namespace Alarm.Log
         {
             base.Load();
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            RegisterPreHandler("loggers", Logger.FromJson);
-            RegisterPreHandler("logger.trace", TraceLogger.FromJson);
-            RegisterPreHandler("logger.out.stdout", (json, env) => Logger.LinkStream(json.Deserialize<Logger.LinkConfig>(Configuration.JsonSerializerOptions).upstream, env, Console.OpenStandardOutput()));
-            RegisterPreHandler("logger.out.stderr", (json, env) => Logger.LinkStream(json.Deserialize<Logger.LinkConfig>(Configuration.JsonSerializerOptions).upstream, env, Console.OpenStandardError()));
-            RegisterPreHandler("logger.out.file", Logger.LinkFileStream);
-            RegisterPostHandler("logger.in.playback", PlaybackEventLogger.FromJson);
+            RegisterPreHandler("loggers", new(Logger.FromJson, typeof(Logger.Config)));
+            RegisterPreHandler("logger.trace", new(TraceLogger.FromJson, typeof(TraceLogger)));
+            RegisterPreHandler("logger.out.stdout", new((json, env) => Logger.LinkStream(json.Deserialize<Logger.LinkConfig>(Configuration.JsonSerializerOptions).upstream, env, Console.OpenStandardOutput()), typeof(Logger.LinkConfig)));
+            RegisterPreHandler("logger.out.stderr", new((json, env) => Logger.LinkStream(json.Deserialize<Logger.LinkConfig>(Configuration.JsonSerializerOptions).upstream, env, Console.OpenStandardError()), typeof(Logger.LinkConfig)));
+            RegisterPreHandler("logger.out.file", new(Logger.LinkFileStream, typeof(Logger.LinkFileConfig)));
+            RegisterPostHandler("logger.in.playback", new(PlaybackEventLogger.FromJson, typeof(PlaybackEventLogger)));
         }
     }
 }

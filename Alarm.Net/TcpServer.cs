@@ -92,13 +92,13 @@ namespace Alarm.Net
             }
         }
 
-        private struct Config
+        internal struct Config()
         {
             public required string ip;
             public required int port;
 
             [JsonPropertyName("controller.tcp")]
-            public bool asCtrl;
+            public bool asCtrl = false;
 
             [JsonPropertyName("logger.out.tcp")]
             public HttpServer.LinkConfig? linkTo;

@@ -122,12 +122,12 @@ namespace Alarm.Net
             }
         }
 
-        private struct Config
+        internal struct Config()
         {
-            public string[] prefixes;
+            public string[] prefixes = [];
 
             [JsonPropertyName("controller.websocket")]
-            public bool asCtrl;
+            public bool asCtrl = false;
 
             [JsonPropertyName("logger.out.websocket")]
             public HttpServer.LinkConfig? linkTo;

@@ -1,6 +1,7 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Alarm.Core
 {
@@ -14,6 +15,7 @@ namespace Alarm.Core
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             ReadCommentHandling = JsonCommentHandling.Skip,
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver()
         };
     }
     public delegate void ConfigHandler(JsonElement json, Application app);

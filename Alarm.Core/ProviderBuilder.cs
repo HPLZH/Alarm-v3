@@ -5,18 +5,18 @@ namespace Alarm.Core
 {
     public static class ProviderBuilder
     {
-        public static readonly Dictionary<string, ProviderFromJson> builders = [];
+        public static readonly Dictionary<string, ProviderTypeInfo> builders = [];
 
         static ProviderBuilder()
         {
-            builders.Add("random", ListRandomSelect.FromJson);
+            builders.Add("random", new ProviderTypeInfo(ListRandomSelect.FromJson, true));
         }
 
         public static IProvider Build(ProviderBuildInfo buildInfo, IProvider upstream, IEnumerable<string> playlist)
         {
             if (builders.TryGetValue(buildInfo.type, out var builder))
             {
-                return builder.Invoke(buildInfo.config, upstream, playlist);
+                return builder.builder.Invoke(buildInfo.config, upstream, playlist);
             }
             else
             {

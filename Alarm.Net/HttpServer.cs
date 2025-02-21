@@ -102,12 +102,12 @@ namespace Alarm.Net
             }
         }
 
-        private struct Config
+        internal struct Config()
         {
-            public string[] prefixes;
+            public string[] prefixes = [];
 
             [JsonPropertyName("controller.http")]
-            public bool asCtrl;
+            public bool asCtrl = false;
 
             [JsonPropertyName("logger.out.http")]
             public LinkConfig? linkTo;

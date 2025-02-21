@@ -6,7 +6,7 @@ namespace Alarm.StreamController
         protected override void Load()
         {
             base.Load();
-            RegisterPostHandler("controller.console", ConsoleController.FromJson);
+            RegisterPostHandler("controller.console", new(ConsoleController.FromJson, typeof(bool)));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Reflection;
+using System.Text.Json.Nodes;
 
 namespace Alarm.Loader
 {
@@ -44,22 +45,40 @@ namespace Alarm.Loader
             Trace.WriteLine($"ModLoader: Loaded {count} ModLoader(s) from {assemblyName.Name}.");
         }
 
-        public struct Config
+        public struct Config()
         {
-            public string[]? mods;
+            public string[] mods = [];
         }
 
-        public static void RegisterPreHandler(string id, ConfigHandler handler)
+        public static JsonObject GetConfigSchema()
         {
-            Application.preHandlers.Add(id, handler);
+            JsonObject schema = Application.GetConfigJsonSchema();
+            JsonObject props = schema["properties"]?.AsObject() ?? throw new NullReferenceException(); 
+            props.Insert(0, "mods", Schema.GetSchema(typeof(Config)));
+            return schema;
         }
 
-        public static void RegisterPostHandler(string id, ConfigHandler handler)
+        public static void RegisterPreHandler(string id, ConfigHandlerInfo handler)
         {
-            Application.postHandlers.Add(id, handler);
+            ConfigHandlerInfo info = handler;
+            info.isPreHandler = true;
+            Application.configHandlers.Add(id, info);
         }
 
-        public static void RegisterProviderBuilder(string id, ProviderFromJson builder)
+        public static void RegisterPostHandler(string id, ConfigHandlerInfo handler)
+        {
+            ConfigHandlerInfo info = handler;
+            info.isPreHandler = false;
+            Application.configHandlers.Add(id, info);
+        }
+
+        public static void RegisterConfigHandler(string id, ConfigHandlerInfo handler)
+        {
+            Application.configHandlers.Add(id, handler);
+        }
+
+
+        public static void RegisterProviderBuilder(string id, ProviderTypeInfo builder)
         {
             ProviderBuilder.builders.Add(id, builder);
         }

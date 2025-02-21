@@ -14,16 +14,15 @@ namespace Alarm.Core
             };
         }
 
-        public static VolumeManager ExecuteVolumeConfig(PlayerInfo info, VolumeManager? volumeManager = null)
+        public static VolumeManager ExecuteVolumeConfig(IDictionary<string, int> volume, VolumeManager? volumeManager = null)
         {
             VolumeManager manager = volumeManager ?? VolumeManager.Shared;
-            if (info.volume >= 0)
+            foreach (var (d, v) in volume)
             {
-                manager.Foreach(manager.SaveAndSetVolume(info.volume / 100f), info.guid.ToString() ?? "");
-            }
-            if (info.unmute)
-            {
-                manager.Foreach(manager.SaveAndSetMute(false), info.guid.ToString() ?? "");
+                if (v >= 0)
+                    manager.Foreach(manager.SaveAndSet(v / 100f, false), d);
+                else if (v == -2)
+                    manager.Foreach(manager.SaveAndSetMute(false), d);
             }
             return manager;
         }
@@ -44,17 +43,17 @@ namespace Alarm.Core
             app[NAME_MAINCONFIG] = mainConfig;
             foreach (var (name, json) in mainConfig.ext)
             {
-                if (preHandlers.TryGetValue(name, out var handler))
+                if (configHandlers.TryGetValue(name, out var handler) && handler.isPreHandler)
                 {
-                    handler.Invoke(json, app);
+                    handler.handler.Invoke(json, app);
                 }
             }
             app[NAME_CONTROLLER] = BuildController(mainConfig);
             foreach (var (name, json) in mainConfig.ext)
             {
-                if (postHandlers.TryGetValue(name, out var handler))
+                if (configHandlers.TryGetValue(name, out var handler) && !handler.isPreHandler)
                 {
-                    handler.Invoke(json, app);
+                    handler.handler.Invoke(json, app);
                 }
             }
             return app;
@@ -63,8 +62,7 @@ namespace Alarm.Core
         public const string NAME_CONTROLLER = "alarm.core:controller";
         public const string NAME_MAINCONFIG = "alarm.core:config";
 
-        public static readonly Dictionary<string, ConfigHandler> preHandlers = [];
-        public static readonly Dictionary<string, ConfigHandler> postHandlers = [];
+        public static readonly Dictionary<string, ConfigHandlerInfo> configHandlers = [];
         public static readonly Dictionary<Type, Action<string, object>> exitHandlers = [];
 
         public static void Exit(Application app, int code = 0)

@@ -146,7 +146,7 @@ namespace Alarm.Log
             }
         }
 
-        private struct Config
+        internal struct Config
         {
             public required string id;
         }
@@ -156,7 +156,7 @@ namespace Alarm.Log
             public required string upstream;
         }
 
-        private struct LinkFileConfig
+        internal struct LinkFileConfig
         {
             public required string id;
             public required string upstream;

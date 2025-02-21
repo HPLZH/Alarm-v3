@@ -98,10 +98,10 @@ namespace Alarm.Providers.Source
 
         public class Managed : FloatingWeight
         {
-            private struct Config
+            internal struct Config()
             {
-                public string data;
-                public Options? opts;
+                public required string data;
+                public Options opts = new();
             }
 
             private readonly string data;
@@ -125,7 +125,7 @@ namespace Alarm.Providers.Source
                 {
                     weightData = [];
                 }
-                return new Managed(config.data, playlist, weightData, config.opts ?? new Options());
+                return new Managed(config.data, playlist, weightData, config.opts);
             }
 
             public override void OnPlaybackFinished(string file, TimeSpan length)

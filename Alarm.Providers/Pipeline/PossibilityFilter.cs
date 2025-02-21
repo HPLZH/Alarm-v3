@@ -19,12 +19,11 @@ namespace Alarm.Providers.Pipeline
         }
 
 
-        private struct Config
+        internal struct Config()
         {
             public double basicPossibility = 1;
-            public JsonReference<Dictionary<string, double>> possibility;
+            public required JsonReference<Dictionary<string, double>> possibility;
 
-            public Config() { }
         }
 
         public static PossibilityFilter FromJson(JsonElement json, IProvider upstream, IEnumerable<string> _)

@@ -7,9 +7,9 @@ namespace Alarm.Net
         protected override void Load()
         {
             base.Load();
-            RegisterPostHandler("server.http", HttpServer.FromJson);
-            RegisterPostHandler("server.tcp", TcpServer.FromJson);
-            RegisterPostHandler("server.websocket", WebSocketServer.FromJson);
+            RegisterPostHandler("server.http", new(HttpServer.FromJson, typeof(HttpServer.Config)));
+            RegisterPostHandler("server.tcp", new(TcpServer.FromJson, typeof(TcpServer.Config)));
+            RegisterPostHandler("server.websocket", new(WebSocketServer.FromJson, typeof(WebSocketServer.Config)));
         }
     }
 }
