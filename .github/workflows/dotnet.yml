@@ -4,6 +4,11 @@
 name: .NET
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Alarm.*/version.json'
   workflow_dispatch:
 
 jobs:
