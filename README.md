@@ -2,21 +2,21 @@
 
 第三代闹钟, 尚未完成
 
-## Alarm.Core [1.0.0-beta.1]
+## Alarm.Core [1.0.0-beta.2]
 
 闹钟的核心组件，正在测试稳定性
 
-## Alarm.Loader [1.0.0-rc.1]
+## Alarm.Loader [1.0.0-rc.2]
 
 闹钟的 Mod 加载器，用来实现可扩展功能
 
 （还未开工）Mod 开发指南
 
-## Alarm.App [1.0.0-beta.1]
+## Alarm.App [1.0.0-beta.2]
 
 命令行版本的闹钟应用程序，适合与任务计划程序共同使用
 
-## Alarm.Log [1.0.0-beta.1]
+## Alarm.Log [1.0.0-beta.2]
 
 闹钟的日志功能
 
