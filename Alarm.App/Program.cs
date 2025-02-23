@@ -35,9 +35,11 @@ var LoadExternalMods = (Stream f) =>
 var root = new RootCommand();
 
 var start = new Command("start", "启动闹钟");
+start.AddAlias("x");
 root.Add(start);
 
 var test = new Command("test", "测试配置文件");
+test.AddAlias("t");
 root.Add(test);
 
 var schema = new Command("schema", "生成配置文件的 Json Schema");
@@ -61,6 +63,14 @@ root.AddGlobalOption(mod);
 var clean = new Option<bool>("--clean", "禁用内置 Mod");
 clean.AddAlias("--cl");
 root.AddGlobalOption(clean);
+
+var device = new Command("device", "关于音频输出设备");
+device.AddAlias("d");
+root.Add(device);
+
+var deviceList = new Command("list", "列出所有设备");
+deviceList.AddAlias("ls");
+device.Add(deviceList);
 
 start.SetHandler((config, moden, cl) =>
 {
@@ -155,6 +165,11 @@ schema.SetHandler((config, moden, cl, output) =>
     }
     outw.Close();
 }, conf, mod, clean, outfile);
+
+deviceList.SetHandler(() =>
+{
+    VolumeManager.ListDevice(Console.WriteLine);
+});
 
 var cmdBuilder = new CommandLineBuilder(root);
 cmdBuilder.UseVersionOption("--version", "-v", "-V").UseDefaults();
