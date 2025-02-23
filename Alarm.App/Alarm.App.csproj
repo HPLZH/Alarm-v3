@@ -12,6 +12,7 @@
     <Company></Company>
     <RepositoryUrl>https://github.com/HPLZH/Alarm-v3/</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageId>hplzh.$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
