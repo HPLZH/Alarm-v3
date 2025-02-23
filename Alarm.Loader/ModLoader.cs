@@ -54,7 +54,7 @@ namespace Alarm.Loader
         {
             JsonObject schema = Application.GetConfigJsonSchema();
             JsonObject props = schema["properties"]?.AsObject() ?? throw new NullReferenceException();
-            props.Insert(0, "mods", Schema.GetSchema(typeof(Config)));
+            props.Insert(0, "mods", Schema.GetSchema(typeof(string[])));
             return schema;
         }
 

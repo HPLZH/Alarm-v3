@@ -43,7 +43,7 @@ namespace Alarm.Core
                 });
             }
 
-            providerBuilders["item"] = new JsonObject
+            providerBuilders["items"] = new JsonObject
             {
                 ["type"] = "object",
                 ["anyOf"] = builders

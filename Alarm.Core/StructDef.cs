@@ -29,7 +29,8 @@ public struct PlaylistInfo : ISchemaDefined
         },
         ["required"] = new JsonArray("type"),
         ["minProperties"] = 2,
-        ["maxProperties"] = 2
+        ["maxProperties"] = 2,
+        ["additionalProperties"] = false
     };
 
     public readonly IEnumerable<string> GetList()
@@ -95,7 +96,8 @@ public struct JsonReference<T> : ISchemaDefined
             ["type"] = "object",
             ["properites"] = props,
             ["minProperties"] = 1,
-            ["maxProperties"] = 1
+            ["maxProperties"] = 1,
+            ["additionalProperties"] = false
         };
     }
 
