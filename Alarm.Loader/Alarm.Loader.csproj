@@ -13,7 +13,13 @@
     <RepositoryUrl>https://github.com/HPLZH/Alarm-v3/</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageId>hplzh.$(AssemblyName)</PackageId>
+    <Copyright>Copyright (c) 2025 Li Zihan</Copyright>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Alarm.Core\Alarm.Core.csproj" />
