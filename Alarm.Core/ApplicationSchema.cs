@@ -13,11 +13,14 @@ namespace Alarm.Core
 
             props["playlist"] = PlaylistInfo.StaticSchema();
 
-            props["volume"] = new JsonObject
-            {
-                ["type"] = new JsonArray("integer", "boolean"),
-                ["minimum"] = -2,
-                ["maximum"] = 100
+            props["volume"] = new JsonObject{
+                ["type"] = "object",
+                ["additionalProperties"] = new JsonObject
+                {
+                    ["type"] = new JsonArray("integer", "boolean"),
+                    ["minimum"] = -2,
+                    ["maximum"] = 100
+                }
             };
 
             foreach (var (k, v) in configHandlers)
