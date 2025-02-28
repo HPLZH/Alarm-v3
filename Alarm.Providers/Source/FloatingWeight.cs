@@ -131,8 +131,10 @@ namespace Alarm.Providers.Source
             public override void OnPlaybackFinished(string file, TimeSpan length)
             {
                 base.OnPlaybackFinished(file, length);
-                using var datafile = File.OpenWrite(data);
+                using var datafile = File.Open(data, FileMode.Create);
                 JsonSerializer.Serialize(datafile, WeightData(), Configuration.JsonSerializerOptions);
+                datafile.Flush();
+                datafile.Close();
             }
         }
     }
