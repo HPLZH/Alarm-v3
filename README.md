@@ -2,7 +2,7 @@
 
 第三代闹钟, 尚未完成
 
-## Alarm.Core [1.0.0-beta.2]
+## Alarm.Core [1.0.0-beta.3]
 
 闹钟的核心组件，正在测试稳定性
 
@@ -12,7 +12,7 @@
 
 （还未开工）Mod 开发指南
 
-## Alarm.App [1.0.0-beta.2]
+## Alarm.App [1.0.0-beta.3]
 
 命令行版本的闹钟应用程序，适合与任务计划程序共同使用
 
@@ -34,7 +34,7 @@
 
 [纯网页 WebSocket 客户端](http://pages.hplzh.cn/websocket.html)
 
-## Alarm.Providers [1.0.0-beta.1]
+## Alarm.Providers [1.0.0-beta.2]
 
 Provider 是向播放器控制器提供音频文件序列的组件
 
