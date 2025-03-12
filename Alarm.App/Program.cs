@@ -11,6 +11,11 @@ Application env;
 Controller controller;
 MainConfig mainConfig;
 
+AppDomain.CurrentDomain.UnhandledException += (object sender, UnhandledExceptionEventArgs e) =>
+{
+    Trace.TraceError(e.ExceptionObject.ToString());
+};
+
 var LoadModules = () =>
 {
     new Alarm.Providers.Loader().LoadMod();
