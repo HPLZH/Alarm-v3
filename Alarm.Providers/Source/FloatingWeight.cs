@@ -73,10 +73,10 @@ namespace Alarm.Providers.Source
             if (requireSum)
             {
                 sum = 0;
-                foreach (int i in weight)
+                foreach (int w in weight)
                 {
-                    if (weight[i] > 0)
-                        sum += weight[i];
+                    if (w > 0)
+                        sum += w;
                 }
             }
             return;
