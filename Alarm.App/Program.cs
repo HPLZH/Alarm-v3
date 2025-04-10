@@ -120,6 +120,9 @@ test.SetHandler((config, moden, cl) =>
         env.AddExitAction(c => { if (c == 0) Console.WriteLine("测试通过"); else Console.WriteLine("测试不通过"); });
         if (!cl)
         {
+            TraceLogger.TraceListener.TraceOutputOptions = TraceOptions.DateTime;
+            Trace.AutoFlush = true;
+            Trace.Listeners.Add(TraceLogger.TraceListener);
             LoadModules();
         }
         if (moden)
