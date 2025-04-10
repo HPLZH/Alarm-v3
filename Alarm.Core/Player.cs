@@ -49,8 +49,19 @@ namespace Alarm.Core
 
         public static Player BuildFromDevice(Guid device)
         {
-            DirectSoundOut directSoundOut = new(device, LATENCY);
-            return new Player(directSoundOut);
+            if(DirectSoundOut.Devices.Any(d => d.Guid == device))
+            {
+                DirectSoundOut directSoundOut = new(device, LATENCY);
+                return new Player(directSoundOut);
+            }
+            else
+            {
+                return Environment.GetEnvironmentVariable("ALARM_TEST") switch
+                {
+                    "TEST" => throw new Exception($"Device {device} not found."),
+                    _ => new Player(new DirectSoundOut(LATENCY)),
+                };
+            }
         }
 
         public void Play(bool? autoContinue = null)
@@ -126,7 +137,8 @@ namespace Alarm.Core
         {
             if (e.Exception != null)
             {
-                throw e.Exception;
+                Trace.TraceError(e.Exception.ToString());
+                throw new Exception("Playback stopped becasue of another exception.", e.Exception);
             }
             else
             {

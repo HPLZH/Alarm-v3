@@ -1,5 +1,6 @@
 ﻿using NAudio.CoreAudioApi;
 using NAudio.Wave;
+using System.Diagnostics;
 
 namespace Alarm.Core
 {
@@ -71,12 +72,18 @@ namespace Alarm.Core
 
         public void Foreach(Action<MMDevice> action, string search = "")
         {
+            int count = 0;
             foreach (MMDevice device in SpeakDevices)
             {
                 if (search == "" || device.ID.Contains(search))
                 {
                     action(device);
+                    count++;
                 }
+            }
+            if(count == 0 && search != "")
+            {
+                Trace.TraceWarning($"VolumeManager: Device \"{search}\" not found.");
             }
         }
 

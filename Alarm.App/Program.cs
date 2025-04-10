@@ -111,6 +111,7 @@ start.SetHandler((config, moden, cl) =>
 
 test.SetHandler((config, moden, cl) =>
 {
+    Environment.SetEnvironmentVariable("ALARM_TEST", "TEST");
     try
     {
         env = [];
