@@ -44,10 +44,13 @@ namespace Alarm.Providers.Source
             long n = Random.Shared.NextInt64(sum);
             for (int i = 0; i < list.Length; i++)
             {
-                n -= weight[i];
-                if (n < 0)
+                if (weight[i] > 0)
                 {
-                    return list[i];
+                    n -= weight[i];
+                    if (n < 0)
+                    {
+                        return list[i];
+                    }
                 }
             }
             return list[^1];
