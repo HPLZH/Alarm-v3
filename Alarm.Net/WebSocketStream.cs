@@ -1,4 +1,5 @@
-﻿using System.Net.WebSockets;
+﻿using System.IO.Pipelines;
+using System.Net.WebSockets;
 
 namespace Alarm.Net
 {
@@ -6,44 +7,38 @@ namespace Alarm.Net
     {
         readonly WebSocket webSocket;
         public WebSocketMessageType MessageType { get; set; } = WebSocketMessageType.Text;
+
+        readonly Pipe pipe = new();
+        readonly Stream reader;
+        readonly Stream writer;
+
+        [Obsolete("Read 方法已改用 PipeReader 实现")]
         public bool ReadAsap { get; set; } = false;
 
         readonly Lock sendLock = new();
-        readonly Lock recvLock = new();
         readonly byte[] buffer = new byte[1024];
-        int offset = 0;
-        int tail = 0;
 
         public WebSocketStream(WebSocket webSocket)
         {
             this.webSocket = webSocket;
+            reader = pipe.Reader.AsStream();
+            writer = pipe.Writer.AsStream();
             Task.Run(() =>
             {
                 while (webSocket.State == WebSocketState.Connecting)
                 {
                     Task.Delay(100).Wait();
                 }
-                while (CanRead)
+                while (webSocket.State == WebSocketState.Open)
                 {
-                    if (tail < buffer.Length)
+                    var r = webSocket.ReceiveAsync(buffer, CancellationToken.None).Result;
+                    if (r.Count == 0 && r.EndOfMessage)
                     {
-                        lock (recvLock)
-                        {
-                            ArraySegment<byte> arr = new(buffer, tail, buffer.Length - tail);
-                            var r = webSocket.ReceiveAsync(arr, CancellationToken.None).Result;
-                            if (r.Count == 0)
-                            {
-                                Write([]);
-                            }
-                            else
-                            {
-                                tail += r.Count;
-                            }
-                        }
+                        Flush();
                     }
                     else
                     {
-                        Task.Yield().GetAwaiter().GetResult();
+                        writer.Write(buffer, 0, r.Count);
                     }
                 }
             });
@@ -68,28 +63,7 @@ namespace Alarm.Net
             }
         }
 
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-            int wcount = 0;
-            while (CanRead && (ReadAsap ? wcount == 0 : wcount < count))
-            {
-                if (this.tail - this.offset > 0)
-                {
-                    lock (recvLock)
-                    {
-                        int cpn = Math.Min(this.tail - this.offset, count - wcount);
-                        Array.Copy(this.buffer, offset, buffer, offset + wcount, cpn);
-                        this.offset += cpn;
-                        wcount += cpn;
-                    }
-                }
-                else
-                {
-                    Task.Yield().GetAwaiter().GetResult();
-                }
-            }
-            return wcount;
-        }
+        public override int Read(byte[] buffer, int offset, int count) => reader.Read(buffer, offset, count);
 
         public override long Seek(long offset, SeekOrigin origin)
         {
