@@ -34,7 +34,7 @@ namespace Alarm.Net
 
         public void OnConnect(TcpClient client)
         {
-            NetworkStream stream = client.GetStream();
+            Stream stream = Stream.Synchronized(client.GetStream());
             if (@out)
             {
                 logger?.AddOutput(stream);
@@ -46,7 +46,8 @@ namespace Alarm.Net
                     if (@in)
                     {
                         using StreamReader reader = new(stream);
-                        Interpreter interpreter = new(reader, app);
+                        using StreamWriter writer = new(stream) { AutoFlush = true };
+                        Interpreter interpreter = new(reader, app, writer);
                         interpreter.Execute();
                     }
                     else

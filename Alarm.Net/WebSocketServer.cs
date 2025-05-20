@@ -59,7 +59,7 @@ namespace Alarm.Net
                     return;
                 }
                 WebSocket webSocket = wsContext.WebSocket;
-                WebSocketStream stream = new(webSocket);
+                Stream stream = Stream.Synchronized(new WebSocketStream(webSocket));
                 if (get)
                 {
                     logger?.AddOutput(stream);
@@ -69,7 +69,8 @@ namespace Alarm.Net
                     if (post)
                     {
                         StreamReader reader = new(stream);
-                        Interpreter interpreter = new(reader, app);
+                        StreamWriter writer = new(stream) { AutoFlush = true };
+                        Interpreter interpreter = new(reader, app, writer);
                         interpreter.Execute();
                     }
                     else

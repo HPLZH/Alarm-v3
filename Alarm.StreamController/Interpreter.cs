@@ -1,12 +1,14 @@
 ﻿using Alarm.Core;
 using System.CommandLine;
+using System.CommandLine.IO;
 
 namespace Alarm.StreamController
 {
-    public class Interpreter(TextReader reader, Application env)
+    public class Interpreter(TextReader reader, Application env, TextWriter? output = null)
     {
         readonly Application env = env;
         readonly TextReader reader = reader;
+        readonly TextWriter? output = output;
 
         public IEnumerable<string> ReadToken()
         {
@@ -101,7 +103,7 @@ namespace Alarm.StreamController
         {
             foreach (var args in ReadCommand())
             {
-                CommandLine.Execute(args, env);
+                CommandLine.Execute(args, env, output);
             }
         }
 
@@ -123,7 +125,7 @@ namespace Alarm.StreamController
 
             }
 
-            public static void Execute(string[] args, Application env)
+            public static void Execute(string[] args, Application env, TextWriter? output = null)
             {
                 Controller controller = (Controller)env[Application.NAME_CONTROLLER];
 
@@ -134,6 +136,7 @@ namespace Alarm.StreamController
 
                 cmdExitLater.SetHandler(() =>
                 {
+                    output?.WriteLine("[Command/OK] Exit Later");
                     controller.PlaybackFinished += (_, _) =>
                     {
                         Application.Exit(env, 0);
@@ -142,7 +145,7 @@ namespace Alarm.StreamController
 
                 cmdNext.SetHandler(controller.Skip);
 
-                root.Invoke(args, new System.CommandLine.IO.TestConsole());
+                root.Invoke(args, new TestConsole());
             }
         }
     }

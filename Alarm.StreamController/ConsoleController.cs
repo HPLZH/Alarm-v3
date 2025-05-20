@@ -11,7 +11,7 @@ namespace Alarm.StreamController
         {
             if (json.Deserialize<bool>(Configuration.JsonSerializerOptions))
             {
-                Interpreter = new(Console.In, env);
+                Interpreter = new(Console.In, env, Console.Out);
                 env.AddMainTask(new Task(Interpreter.Execute));
             }
         }
