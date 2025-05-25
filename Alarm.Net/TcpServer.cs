@@ -34,7 +34,7 @@ namespace Alarm.Net
 
         public void OnConnect(TcpClient client)
         {
-            Stream stream = Stream.Synchronized(client.GetStream());
+            Stream stream = new SyncStream(client.GetStream());
             if (@out)
             {
                 logger?.AddOutput(stream);

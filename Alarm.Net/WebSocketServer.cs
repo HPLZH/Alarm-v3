@@ -59,7 +59,7 @@ namespace Alarm.Net
                     return;
                 }
                 WebSocket webSocket = wsContext.WebSocket;
-                Stream stream = Stream.Synchronized(new WebSocketStream(webSocket));
+                Stream stream = new SyncStream(new WebSocketStream(webSocket));
                 if (get)
                 {
                     logger?.AddOutput(stream);
